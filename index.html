@@ -70,14 +70,14 @@
     <!-- =========== HEADER / NAVIGATION =========== -->
     <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="text-xl md:text-2xl font-bold text-maroon">Purani Durga Puja Samiti, Dhurlakh</a>
+            <a href="#" class="text-lg md:text-xl font-bold text-maroon flex-shrink-0">Purani Durga Puja Samiti, Dhurlakh</a>
             <!-- Desktop Menu -->
-            <div class="hidden md:flex items-center space-x-8">
+            <div class="hidden md:flex items-center space-x-4 lg:space-x-8">
                 <a href="#home" class="nav-link text-gray-700 hover:text-maroon">Home</a>
                 <a href="#schedule" class="nav-link text-gray-700 hover:text-maroon">Schedule</a>
                 <a href="#committee" class="nav-link text-gray-700 hover:text-maroon">Committee</a>
                 <a href="#gallery-page" class="nav-link text-gray-700 hover:text-maroon">Gallery</a>
-                <a href="#contact" class="nav-link bg-maroon text-white px-5 py-2 rounded-full hover:bg-maroon-dark transition-colors">Contact</a>
+                <a href="#contact" class="nav-link bg-maroon text-white px-5 py-2 rounded-full hover:bg-maroon-dark transition-colors flex-shrink-0">Contact</a>
             </div>
              <!-- Mobile Menu Button -->
             <div class="md:hidden">
@@ -100,7 +100,7 @@
     </div>
 
 
-    <main>
+    <main class="overflow-x-hidden">
         <div id="main-view">
             <!-- =========== HERO SECTION =========== -->
             <section id="home" class="page-section pt-24 md:pt-32">
@@ -309,24 +309,14 @@
         const backToHomeBtn = document.getElementById('back-to-home');
 
         function showPage(pageId) {
-            // Hide all main sections
-            document.querySelectorAll('#main-view .page-section').forEach(section => {
-                section.classList.add('hidden');
-            });
-            mainView.classList.add('hidden');
-            galleryView.classList.add('hidden');
-            footer.classList.add('hidden');
-
             if (pageId === 'gallery-page') {
+                mainView.classList.add('hidden');
                 galleryView.classList.remove('hidden');
+                footer.classList.remove('hidden');
             } else {
                 mainView.classList.remove('hidden');
+                galleryView.classList.add('hidden');
                 footer.classList.remove('hidden');
-                document.querySelectorAll('#main-view .page-section').forEach(section => {
-                    section.classList.remove('hidden');
-                });
-                
-                // Scroll to the section if it's not home
                 const targetSection = document.getElementById(pageId);
                 if (targetSection) {
                     targetSection.scrollIntoView({ behavior: 'smooth' });
@@ -343,15 +333,13 @@
                 if (targetId === 'gallery-page') {
                     showPage('gallery-page');
                 } else {
-                    // If we are in gallery view, first switch to main view
-                    if (!galleryView.classList.contains('hidden')) {
-                         showPage(targetId);
-                    }
-                    // Then scroll to the section
-                    const targetSection = document.getElementById(targetId);
-                    if (targetSection) {
-                        targetSection.scrollIntoView({ behavior: 'smooth' });
-                    }
+                    showPage('home'); // Go to home first
+                    setTimeout(() => { // Then scroll to section
+                        const targetSection = document.getElementById(targetId);
+                        if (targetSection) {
+                           targetSection.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }, 10);
                 }
                 // Close mobile menu if open
                 if (mobileMenu && !mobileMenu.classList.contains('-translate-x-full')) {
@@ -412,4 +400,3 @@
     </script>
 </body>
 </html>
-
