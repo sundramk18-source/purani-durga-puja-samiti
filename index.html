@@ -70,13 +70,13 @@
     <!-- =========== HEADER / NAVIGATION =========== -->
     <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="text-lg md:text-xl font-bold text-maroon flex-shrink-0">Purani Durga Puja Samiti, Dhurlakh</a>
+            <a href="#" class="text-lg md:text-xl font-bold text-maroon flex-shrink-0 mr-4">Purani Durga Puja Samiti, Dhurlakh</a>
             <!-- Desktop Menu -->
-            <div class="hidden md:flex items-center space-x-4 lg:space-x-8">
-                <a href="#home" class="nav-link text-gray-700 hover:text-maroon">Home</a>
-                <a href="#schedule" class="nav-link text-gray-700 hover:text-maroon">Schedule</a>
-                <a href="#committee" class="nav-link text-gray-700 hover:text-maroon">Committee</a>
-                <a href="#gallery-page" class="nav-link text-gray-700 hover:text-maroon">Gallery</a>
+            <div class="hidden md:flex items-center space-x-2 lg:space-x-6">
+                <a href="#home" class="nav-link text-gray-700 hover:text-maroon px-2 py-1">Home</a>
+                <a href="#schedule" class="nav-link text-gray-700 hover:text-maroon px-2 py-1">Schedule</a>
+                <a href="#committee" class="nav-link text-gray-700 hover:text-maroon px-2 py-1">Committee</a>
+                <a href="#gallery-page" class="nav-link text-gray-700 hover:text-maroon px-2 py-1">Gallery</a>
                 <a href="#contact" class="nav-link bg-maroon text-white px-5 py-2 rounded-full hover:bg-maroon-dark transition-colors flex-shrink-0">Contact</a>
             </div>
              <!-- Mobile Menu Button -->
@@ -100,7 +100,7 @@
     </div>
 
 
-    <main class="overflow-x-hidden">
+    <main>
         <div id="main-view">
             <!-- =========== HERO SECTION =========== -->
             <section id="home" class="page-section pt-24 md:pt-32">
@@ -319,7 +319,10 @@
                 footer.classList.remove('hidden');
                 const targetSection = document.getElementById(pageId);
                 if (targetSection) {
-                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                    // Timeout to ensure the view is visible before scrolling
+                    setTimeout(() => {
+                        targetSection.scrollIntoView({ behavior: 'smooth' });
+                    }, 0);
                 }
             }
             window.scrollTo(0, 0);
@@ -333,13 +336,7 @@
                 if (targetId === 'gallery-page') {
                     showPage('gallery-page');
                 } else {
-                    showPage('home'); // Go to home first
-                    setTimeout(() => { // Then scroll to section
-                        const targetSection = document.getElementById(targetId);
-                        if (targetSection) {
-                           targetSection.scrollIntoView({ behavior: 'smooth' });
-                        }
-                    }, 10);
+                    showPage(targetId);
                 }
                 // Close mobile menu if open
                 if (mobileMenu && !mobileMenu.classList.contains('-translate-x-full')) {
